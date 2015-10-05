@@ -1,10 +1,15 @@
 {
   "name": "atom-math",
   "main": "./lib/atom-math",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Antonio Bevilacqua <b3by.in.th3.sky@gmail.com>",
   "description": "Atom package for evaluating simple mathematical expression using Math.js",
-  "keywords": ["atom", "math", "mathjs", "mathematical"],
+  "keywords": [
+    "atom",
+    "math",
+    "mathjs",
+    "mathematical"
+  ],
   "activationCommands": {
     "atom-workspace": [
       "atom-math:evaluate"
