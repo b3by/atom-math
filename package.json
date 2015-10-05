@@ -1,0 +1,22 @@
+{
+  "name": "atom-math",
+  "main": "./lib/atom-math",
+  "version": "0.0.0",
+  "author": "Antonio Bevilacqua <b3by.in.th3.sky@gmail.com>",
+  "description": "Atom package for evaluating simple mathematical expression using Math.js",
+  "keywords": ["atom", "math", "mathjs", "mathematical"],
+  "activationCommands": {
+    "atom-workspace": [
+      "atom-math:evaluate"
+    ]
+  },
+  "repository": "https://github.com/b3by/atom-math.git",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "loophole": "^1.1.0",
+    "mathjs": "^2.3.0"
+  }
+}
