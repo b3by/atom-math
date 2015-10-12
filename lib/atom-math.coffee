@@ -42,7 +42,6 @@ module.exports = AtomMath =
 
   evaluate: ->
     if editor = atom.workspace.getActiveTextEditor()
-
       currentRow = editor.getCursorBufferPosition().row
       if editor.lineTextForBufferRow(currentRow) is 0
         return
