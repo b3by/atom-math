@@ -1,2 +1,6 @@
 'atom-workspace':
   'ctrl-alt-m': 'atom-math:evaluate'
+
+'atom-text-editor':
+  'ctrl-up': 'atom-math:navigate-history'
+  'ctrl-down': 'atom-math:navigate-history'
