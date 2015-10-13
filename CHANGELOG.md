@@ -1,3 +1,7 @@
+## 0.0.3
+* Functions evaluation added
+* Activation command removed (package is now automatically activated)
+
 ## 0.0.2 - History available
 * Command history added
 * General code refactoring

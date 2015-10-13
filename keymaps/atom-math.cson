@@ -2,5 +2,5 @@
   'ctrl-alt-m': 'atom-math:evaluate'
 
 'atom-text-editor':
-  'ctrl-up': 'atom-math:navigate-history'
-  'ctrl-down': 'atom-math:navigate-history'
+  'ctrl-up': 'atom-math:getPreviousHistoryCommand'
+  'ctrl-down': 'atom-math:getNextHistoryCommand'

@@ -1,25 +1,30 @@
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
-Mathjs = allowUnsafeEval ->
-  allowUnsafeNewFunction -> require 'mathjs'
+Parser = allowUnsafeEval ->
+  allowUnsafeNewFunction -> require('mathjs').parser()
 
 module.exports = AtomMath =
 
-  history: null
-  historyIndex: 0
+  history:       null
+  historyIndex:  0
 
   activate: (state) ->
     @history = []
-    @historyIndex = 0
     atom.commands.add 'atom-workspace', 'atom-math:evaluate': (event) => @evaluate event
-    atom.commands.add 'atom-text-editor', 'atom-math:navigate-history': (event) => @navigateHistory event
+    atom.commands.add 'atom-text-editor', 'atom-math:getPreviousHistoryCommand': (event) => @getPreviousHistoryCommand()
+    atom.commands.add 'atom-text-editor', 'atom-math:getNextHistoryCommand': (event) => @getNextHistoryCommand()
 
   initialize: (serializeState) ->
 
-  navigateHistory: (event) ->
+  getPreviousHistoryCommand: ->
+    @navigateHistory true
+
+  getNextHistoryCommand: ->
+    @navigateHistory false
+
+  navigateHistory: (directionUp) ->
     if !@history or @history.length is 0
       return
 
-    directionUp = event.originalEvent.keyIdentifier == 'Up'
     editor = atom.workspace.getActiveTextEditor()
 
     unless editor
@@ -51,7 +56,10 @@ module.exports = AtomMath =
       @historyIndex = @history.length - 1
 
       try
-        result = allowUnsafeEval -> allowUnsafeNewFunction -> Mathjs.eval toEvaluate
+        result = allowUnsafeEval -> allowUnsafeNewFunction -> Parser.eval toEvaluate
+        if typeof result is 'function'
+          result = 'saved'
+
       catch error
         result = 'wrong syntax'
 
@@ -61,4 +69,5 @@ module.exports = AtomMath =
       editor.insertNewline()
 
   deactivate: ->
-    history.length = 0
+    @history.length = 0
+    @historyIndex   = 0

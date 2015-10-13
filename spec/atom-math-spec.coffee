@@ -1,13 +1,13 @@
 AtomMath = require '../lib/atom-math'
 
-describe "AtomMath", ->
+describe 'AtomMath', ->
   [workspaceElement, activationPromise] = []
   testEditor = null
 
   triggerEvaluation = (callback) ->
-    atom.commands.dispatch(workspaceElement, 'atom-math:evaluate')
+    atom.commands.dispatch workspaceElement, 'atom-math:evaluate'
     waitsForPromise -> activationPromise
-    runs(callback)
+    runs callback
 
   beforeEach ->
     workspaceElement = atom.views.getView atom.workspace
@@ -17,6 +17,9 @@ describe "AtomMath", ->
         testEditor = editor
 
   describe 'When the plugin is executed', ->
+
+    it 'should get the active package', ->
+      expect(atom.packages.isPackageActive('atom-math')).toBe true
 
     it 'should add a new line to the buffer', ->
       expect(testEditor.getLineCount()).toBe 1
@@ -42,3 +45,36 @@ describe "AtomMath", ->
       testEditor.insertText 'faulty syntaxt'
       triggerEvaluation ->
         expect(testEditor.lineTextForBufferRow(1)).toBe '> wrong syntax'
+
+    it 'should fetch the previous and next commands in the history', ->
+      testEditor.insertText '1 + 2'
+      triggerEvaluation ->
+        pkg = atom.packages.getActivePackage 'atom-math'
+        pkg.mainModule.getPreviousHistoryCommand()
+        expect(testEditor.lineTextForBufferRow(2)).toBe '1 + 2'
+        pkg.mainModule.getNextHistoryCommand()
+        expect(testEditor.lineTextForBufferRow(2)).toBe ''
+        testEditor.insertText '3 + 4'
+        triggerEvaluation ->
+          pkg.mainModule.getPreviousHistoryCommand()
+          expect(testEditor.lineTextForBufferRow(4)).toBe '3 + 4'
+          pkg.mainModule.getPreviousHistoryCommand()
+          expect(testEditor.lineTextForBufferRow(4)).toBe '1 + 2'
+
+    it 'should store custom functions and properly evaluate them', ->
+      testEditor.insertText 'f(x) = 3 + x * 2'
+      triggerEvaluation ->
+        expect(true).toBe true
+        expect(testEditor.lineTextForBufferRow(1)).toBe '> saved'
+        testEditor.insertText 'f(2)'
+        triggerEvaluation ->
+          expect(testEditor.lineTextForBufferRow(3)).toBe '> 7'
+
+    it 'should evaluate more complex functions', ->
+      testEditor.insertText 'f(x) = x + 2'
+      triggerEvaluation ->
+        testEditor.insertText 'g(x, y) = 2 + y + f(x)'
+        triggerEvaluation ->
+          testEditor.insertText 'g(2, 3)'
+          triggerEvaluation ->
+            expect(testEditor.lineTextForBufferRow(5)).toBe '> 9'

@@ -10,11 +10,6 @@
     "mathjs",
     "mathematical"
   ],
-  "activationCommands": {
-    "atom-workspace": [
-      "atom-math:evaluate"
-    ]
-  },
   "repository": "https://github.com/b3by/atom-math.git",
   "license": "MIT",
   "engines": {
