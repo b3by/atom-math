@@ -1,6 +1,8 @@
 # atom-math
 [atom.io pkg](https://atom.io/packages/atom-math)
 
+[![Build Status](https://travis-ci.org/b3by/atom-math.svg?branch=master)](https://travis-ci.org/b3by/atom-math)
+
 Atom package for evaluating mathematical expressions using [Math.js](http://mathjs.org/) as interpreter.
 
 ### Simple expressions
