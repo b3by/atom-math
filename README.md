@@ -1,7 +1,7 @@
-# atom-math package
+# atom-math
 [atom.io pkg](https://atom.io/packages/atom-math)
 
-Atom package for evaluating mathematical expressions using `Math.js` as interpreter.
+Atom package for evaluating mathematical expressions using [Math.js](http://mathjs.org/) as interpreter.
 
 ### Simple expressions
 When working with a buffer, just write an expression to be evaluated like `3 + 2`
