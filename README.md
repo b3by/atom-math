@@ -1,7 +1,10 @@
 # atom-math
-[atom.io pkg](https://atom.io/packages/atom-math)
-
 [![Build Status](https://travis-ci.org/b3by/atom-math.svg?branch=master)](https://travis-ci.org/b3by/atom-math)
+[![Plugin installs!](https://img.shields.io/apm/dm/atom-math.svg?style=flat-square)](https://atom.io/packages/atom-math)
+[![Package version!](https://img.shields.io/apm/v/atom-math.svg?style=flat-square)](https://atom.io/packages/atom-math)
+[![Dependencies!](https://img.shields.io/david/b3by/atom-math.svg?style=flat-square)](https://david-dm.org/b3by/atom-math)
+
+[atom.io pkg](https://atom.io/packages/atom-math)
 
 Atom package for evaluating mathematical expressions using [Math.js](http://mathjs.org/) as interpreter.
 
