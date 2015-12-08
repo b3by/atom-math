@@ -13,19 +13,15 @@ describe 'AtomMath', ->
     workspaceElement = atom.views.getView atom.workspace
     activationPromise = atom.packages.activatePackage 'atom-math'
     waitsForPromise ->
-      atom.workspace.open('./myTest').then (editor) ->
+      atom.workspace.open('./myTest').then (editor) =>
         testEditor = editor
 
   describe 'When the plugin is executed', ->
 
-    it 'should get the active package', ->
-      expect(atom.packages.isPackageActive('atom-math')).toBe true
-
     it 'should add a new line to the buffer', ->
       expect(testEditor.getLineCount()).toBe 1
-      testEditor.insertText 'some content'
-      triggerEvaluation ->
-        expect(testEditor.getLineCount()).toBe 3
+      testEditor.insertText 'some context'
+      triggerEvaluation -> expect(testEditor.getLineCount()).toBe 3
 
     it 'should evaluate basic expressions', ->
       testEditor.insertText '1 + 2'

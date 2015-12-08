@@ -1,4 +1,6 @@
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
+{CompositeDisposable}                     = require 'atom'
+
 Parser = allowUnsafeEval ->
   allowUnsafeNewFunction -> require('mathjs').parser()
 
@@ -8,10 +10,20 @@ module.exports = AtomMath =
   historyIndex:  0
 
   activate: (state) ->
+    @subscriptions = new CompositeDisposable
     @history = []
-    atom.commands.add 'atom-workspace', 'atom-math:evaluate': (event) => @evaluate event
-    atom.commands.add 'atom-text-editor', 'atom-math:getPreviousHistoryCommand': (event) => @getPreviousHistoryCommand()
-    atom.commands.add 'atom-text-editor', 'atom-math:getNextHistoryCommand': (event) => @getNextHistoryCommand()
+
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'atom-math:evaluate': (event) =>
+        @evaluate event
+
+    @subscriptions.add atom.commands.add 'atom-text-editor',
+      'atom-math:getPreviousHistoryCommand': (event) =>
+        @getPreviousHistoryCommand()
+
+    @subscriptions.add atom.commands.add 'atom-text-editor',
+      'atom-math:getNextHistoryCommand': (event) =>
+        @getNextHistoryCommand()
 
   initialize: (serializeState) ->
 
@@ -56,7 +68,9 @@ module.exports = AtomMath =
       @historyIndex = @history.length - 1
 
       try
-        result = allowUnsafeEval -> allowUnsafeNewFunction -> Parser.eval toEvaluate
+        result = allowUnsafeEval -> allowUnsafeNewFunction ->
+          Parser.eval toEvaluate
+
         if typeof result is 'function'
           result = 'saved'
 
@@ -69,5 +83,6 @@ module.exports = AtomMath =
       editor.insertNewline()
 
   deactivate: ->
+    @subscriptions.dispose()
     @history.length = 0
     @historyIndex   = 0
