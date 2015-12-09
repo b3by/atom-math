@@ -3,7 +3,7 @@
 [![Dependencies!](https://img.shields.io/david/b3by/atom-math.svg?style=flat-square)](https://david-dm.org/b3by/atom-math)
 [![Plugin installs!](https://img.shields.io/apm/dm/atom-math.svg?style=flat-square)](https://atom.io/packages/atom-math)
 [![Package version!](https://img.shields.io/apm/v/atom-math.svg?style=flat-square)](https://atom.io/packages/atom-math)
-[!License!](https://img.shields.io/apm/l/atom-math.svg?style=flat-square)(https://github.com/b3by/atom-math/blob/master/LICENSE.md)
+[![License!](https://img.shields.io/apm/l/atom-math.svg?style=flat-square)](https://github.com/b3by/atom-math/blob/master/LICENSE.md)
 
 [atom.io pkg](https://atom.io/packages/atom-math)
 
