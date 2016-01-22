@@ -1,17 +1,17 @@
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 {CompositeDisposable}                     = require 'atom'
+HistoryManager                            = require './history-manager'
 
 Parser = allowUnsafeEval ->
   allowUnsafeNewFunction -> require('mathjs').parser()
 
 module.exports = AtomMath =
 
-  history:       null
-  historyIndex:  0
+  historyManager: null
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
-    @history = []
+    @historyManager = HistoryManager.getManager()
 
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atom-math:evaluate': (event) =>
@@ -28,59 +28,47 @@ module.exports = AtomMath =
   initialize: (serializeState) ->
 
   getPreviousHistoryCommand: ->
-    @navigateHistory true
+    @printOnBuffer @historyManager.getPreviousHistoryCommand()
 
   getNextHistoryCommand: ->
-    @navigateHistory false
+    @printOnBuffer @historyManager.getNextHistoryCommand()
 
-  navigateHistory: (directionUp) ->
-    if !@history or @history.length is 0
-      return
-
+  printOnBuffer: (toPrint) ->
     editor = atom.workspace.getActiveTextEditor()
-
     unless editor
       return
 
-    commandToPrint = ''
-
-    if directionUp and @historyIndex >= 0
-      commandToPrint = @history[@historyIndex]
-      @historyIndex -= 1
-    else if !directionUp and @historyIndex + 1 < @history.length
-      @historyIndex += 1
-      if @historyIndex + 1 <= @history.length
-        commandToPrint = @history[@historyIndex + 1] or ''
-
-    if commandToPrint or !directionUp
-      editor.deleteLine()
-      editor.insertNewline()
-      editor.insertText commandToPrint
+    if toPrint isnt null
+      editor.moveToBeginningOfLine()
+      editor.selectToEndOfLine()
+      editor.insertText toPrint
 
   evaluate: ->
-    if editor = atom.workspace.getActiveTextEditor()
-      currentRow = editor.getCursorBufferPosition().row
-      if editor.lineTextForBufferRow(currentRow) is 0
-        return
+    editor = atom.workspace.getActiveTextEditor()
+    unless editor
+      return
 
-      toEvaluate = editor.lineTextForBufferRow currentRow
-      @history.push toEvaluate
-      @historyIndex = @history.length - 1
+    currentRow = editor.getCursorBufferPosition().row
+    if editor.lineTextForBufferRow(currentRow) is 0
+      return
 
-      try
-        result = allowUnsafeEval -> allowUnsafeNewFunction ->
-          Parser.eval toEvaluate
+    toEvaluate = editor.lineTextForBufferRow currentRow
+    @historyManager.addCommand toEvaluate
 
-        if typeof result is 'function'
-          result = 'saved'
+    try
+      result = allowUnsafeEval -> allowUnsafeNewFunction ->
+        Parser.eval toEvaluate
 
-      catch error
-        result = 'wrong syntax'
+      if typeof result is 'function'
+        result = 'saved'
 
-      editor.moveToEndOfLine()
-      editor.insertNewline()
-      editor.insertText "> #{result}"
-      editor.insertNewline()
+    catch error
+      result = 'wrong syntax'
+
+    editor.moveToEndOfLine()
+    editor.insertNewline()
+    editor.insertText "> #{result}"
+    editor.insertNewline()
 
   deactivate: ->
     @subscriptions.dispose()
