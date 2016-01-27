@@ -37,5 +37,8 @@ class HistoryManager
       else
         return null
 
+    getHistory: ->
+      @history
+
   @getManager: () ->
     managerInstance ?= new PrivateHistoryManager()

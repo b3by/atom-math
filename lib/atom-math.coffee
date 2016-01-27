@@ -1,6 +1,8 @@
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 {CompositeDisposable}                     = require 'atom'
-HistoryManager                            = require './history-manager'
+
+HistoryManager = require './history-manager'
+CoreCommander  = require './core-commander'
 
 Parser = allowUnsafeEval ->
   allowUnsafeNewFunction -> require('mathjs').parser()
@@ -12,6 +14,7 @@ module.exports = AtomMath =
   activate: (state) ->
     @subscriptions = new CompositeDisposable
     @historyManager = HistoryManager.getManager()
+    @coreCommander = new CoreCommander()
 
     @subscriptions.add atom.commands.add 'atom-workspace',
       'atom-math:evaluate': (event) =>
@@ -55,15 +58,18 @@ module.exports = AtomMath =
     toEvaluate = editor.lineTextForBufferRow currentRow
     @historyManager.addCommand toEvaluate
 
-    try
-      result = allowUnsafeEval -> allowUnsafeNewFunction ->
-        Parser.eval toEvaluate
+    if toEvaluate.startsWith('/') and @coreCommander.isCoreCommand toEvaluate
+      result = @coreCommander.runCoreCommand toEvaluate
+    else
+      try
+        result = allowUnsafeEval -> allowUnsafeNewFunction ->
+          Parser.eval toEvaluate
 
-      if typeof result is 'function'
-        result = 'saved'
+        if typeof result is 'function'
+          result = 'saved'
 
-    catch error
-      result = 'wrong syntax'
+      catch error
+        result = 'wrong syntax'
 
     editor.moveToEndOfLine()
     editor.insertNewline()
