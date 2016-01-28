@@ -1,3 +1,9 @@
+## 0.0.5 - Core commands capability
+* New feature for adding inner commands
+* `functionList` and `clearHistory` commands added
+* Code restyles
+* Minor bug fixes
+
 ## 0.0.4 - Commands added to disposables
 * Commands are now added to disposables, so they're disposed when the package is
 deactivated

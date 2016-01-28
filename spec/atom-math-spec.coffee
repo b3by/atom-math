@@ -74,3 +74,18 @@ describe 'AtomMath', ->
           testEditor.insertText 'g(2, 3)'
           triggerEvaluation ->
             expect(testEditor.lineTextForBufferRow(5)).toBe '> 9'
+
+    it 'should print the function list', ->
+      testEditor.insertText 'f(x) = x + 2'
+      triggerEvaluation ->
+        testEditor.insertText '/functionList'
+        triggerEvaluation ->
+          expect(testEditor.lineTextForBufferRow 7).toBe 'f(x) = x + 2'
+
+    it 'should clean the history', ->
+      testEditor.insertText '/clearHistory'
+      triggerEvaluation ->
+        expect(testEditor.lineTextForBufferRow 1).toBe '> history empty'
+        pkg = atom.packages.getActivePackage 'atom-math'
+        pkg.mainModule.getPreviousHistoryCommand()
+        expect(testEditor.lineTextForBufferRow 2).toBe ''

@@ -4,9 +4,12 @@ module.exports =
 class CoreCommander
 
   @commands:
-    printFunctions:
-      description: 'Clear the output window'
-      caller: => @printFunctions()
+    functionList:
+      description: 'Print a list of all defined functions'
+      caller: => @functionList()
+    clearHistory:
+      description: 'Empty the history'
+      caller: => @clearHistory()
 
   clearCommand: (fullCommand) ->
     return fullCommand.split(' ')[0].slice 1
@@ -23,7 +26,7 @@ class CoreCommander
 
     CoreCommander.commands[command].caller()
 
-  @printFunctions: ->
+  @functionList: ->
     history = HistoryManager.getManager().getHistory()
     functionHistory = '\n'
 
@@ -32,3 +35,7 @@ class CoreCommander
         functionHistory += historyEntry + '\n'
 
     functionHistory.replace /\n$/, ''
+
+  @clearHistory: ->
+    HistoryManager.getManager().ereaseHistory()
+    return 'history empty'

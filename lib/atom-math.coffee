@@ -41,7 +41,7 @@ module.exports = AtomMath =
     unless editor
       return
 
-    if toPrint isnt null
+    if toPrint?
       editor.moveToBeginningOfLine()
       editor.selectToEndOfLine()
       editor.insertText toPrint

@@ -40,5 +40,9 @@ class HistoryManager
     getHistory: ->
       @history
 
+    ereaseHistory: ->
+      @history.length = 0
+      @historyIndex   = 0
+
   @getManager: () ->
     managerInstance ?= new PrivateHistoryManager()

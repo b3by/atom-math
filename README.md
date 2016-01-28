@@ -41,6 +41,27 @@ g(2, 3)
 > 9.693147180559945
 ```
 
+### Inner commands
+`atom-math` is also able to evaluate some inner commands that will not evaluate
+any expression through `Math.js`.
+
+Inner commands can be triggered with `/` at the beginning. Commands implemented so
+far are:
+
+- `printFunctions` returns a list of all the functions defined in the history
+- `clearHistory` empties the history content
+
+```
+f(x) = 1 + 3 * x
+> saved
+g(x) = 1 - 3 * x
+> saved
+/functionList
+>
+f(x) = 1 + 3 * x
+g(x) = 1 - 3 * x
+```
+
 ### Command history
 Command history can be navigated by using `ctrl-up` and `ctrl-down`. Browsing
 the command history implies that the current line is emptied and replaced either
