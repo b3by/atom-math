@@ -1,3 +1,6 @@
+## 0.0.6
+* :racehorse: Modules are lazily imported, so loading and activation times are significantly reduced.
+
 ## 0.0.5 - Core commands capability
 * New feature for adding inner commands
 * `functionList` and `clearHistory` commands added
