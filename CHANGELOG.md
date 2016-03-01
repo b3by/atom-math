@@ -1,5 +1,7 @@
 ## 0.0.6
 * :racehorse: Modules are lazily imported, so loading and activation times are significantly reduced.
+* New core commands: `clipHistory` to copy history into clipboard, `help` to print the full command list with description
+* General code refactoring and improvement
 
 ## 0.0.5 - Core commands capability
 * New feature for adding inner commands

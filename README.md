@@ -50,6 +50,8 @@ far are:
 
 - `printFunctions` returns a list of all the functions defined in the history
 - `clearHistory` empties the history content
+- `clipHistory` copies history into clipboard
+- `help` prints the full command list
 
 ```
 f(x) = 1 + 3 * x
@@ -60,6 +62,12 @@ g(x) = 1 - 3 * x
 >
 f(x) = 1 + 3 * x
 g(x) = 1 - 3 * x
+/help
+> Full command list below
+functionList - Print a list of all defined functions
+clearHistory - Empty the history
+clipHistory - Copy history into clipboard
+help - Print the full command list
 ```
 
 ### Command history

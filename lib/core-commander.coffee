@@ -10,6 +10,12 @@ class CoreCommander
     clearHistory:
       description: 'Empty the history'
       caller: => @clearHistory()
+    clipHistory:
+      description: 'Copy history into clipboard'
+      caller: => @clipHistory()
+    help:
+      description: 'Print the full command list'
+      caller: => @help()
 
   clearCommand: (fullCommand) ->
     return fullCommand.split(' ')[0].slice 1
@@ -26,16 +32,31 @@ class CoreCommander
 
     CoreCommander.commands[command].caller()
 
+  @getReadableHistory: (functionsOnly) ->
+    rawHistory = HistoryManager.getManager().getHistory()
+    history = '\n'
+
+    for historyEntry, index in rawHistory
+      if functionsOnly
+        history += historyEntry + '\n' unless historyEntry.indexOf('=') is -1
+      else
+        history += historyEntry + '\n'
+
+    history.replace /\n$/, ''
+
   @functionList: ->
-    history = HistoryManager.getManager().getHistory()
-    functionHistory = '\n'
-
-    for historyEntry, index in history
-      if historyEntry.indexOf('=') isnt -1
-        functionHistory += historyEntry + '\n'
-
-    functionHistory.replace /\n$/, ''
+    @getReadableHistory true
 
   @clearHistory: ->
     HistoryManager.getManager().ereaseHistory()
     return 'history empty'
+
+  @clipHistory: ->
+    atom.clipboard.write @getReadableHistory false
+    'history copied into clipboard'
+
+  @help: ->
+    commandList = 'Full command list below\n'
+    for cmdName, cmd of CoreCommander.commands
+      commandList += cmdName + ' - ' + cmd.description + '\n'
+    commandList.replace /\n$/, ''

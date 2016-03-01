@@ -89,3 +89,11 @@ describe 'AtomMath', ->
         pkg = atom.packages.getActivePackage 'atom-math'
         pkg.mainModule.getPreviousHistoryCommand()
         expect(testEditor.lineTextForBufferRow 2).toBe ''
+
+    it 'should copy history into clipboard', ->
+      testEditor.insertText '1 + 2'
+      triggerEvaluation ->
+        testEditor.insertText '/clipHistory'
+        triggerEvaluation ->
+          clipboard = atom.clipboard.read()
+          expect(clipboard).toBe '\n1 + 2\n/clipHistory'
