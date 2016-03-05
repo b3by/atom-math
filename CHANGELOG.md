@@ -1,3 +1,6 @@
+## 0.0.7
+* :arrow_up: `mathjs` version updated
+
 ## 0.0.6
 * :racehorse: Modules are lazily imported, so loading and activation times are significantly reduced.
 * New core commands: `clipHistory` to copy history into clipboard, `help` to print the full command list with description

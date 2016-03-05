@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "loophole": "^1.1.x",
-    "mathjs": "^2.5.x"
+    "mathjs": "^3.0.x"
   }
 }
