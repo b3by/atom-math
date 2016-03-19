@@ -55,7 +55,7 @@ module.exports = AtomMath =
     if editor.lineTextForBufferRow(currentRow) is 0
       return
 
-    toEvaluate = editor.lineTextForBufferRow currentRow
+    toEvaluate = editor.lineTextForBufferRow(currentRow).trim()
     @historyManager.addCommand toEvaluate
 
     if toEvaluate.startsWith('/') and @coreCommander.isCoreCommand toEvaluate
@@ -80,8 +80,6 @@ module.exports = AtomMath =
 
   deactivate: ->
     @subscriptions.dispose()
-    @history.length = 0
-    @historyIndex   = 0
 
     @historyManager = null
     @coreCommander  = null

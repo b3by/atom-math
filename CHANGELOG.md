@@ -1,8 +1,12 @@
+## 0.0.8
+* :bug: Core commands are now evaluated also with head whitespaces
+* :white_check_mark: New test case added for core commands evaluation
+
 ## 0.0.7
 * :arrow_up: `mathjs` version updated
 
 ## 0.0.6
-* :racehorse: Modules are lazily imported, so loading and activation times are significantly reduced.
+* :racehorse: Modules are lazily imported, so loading and activation times are significantly reduced
 * New core commands: `clipHistory` to copy history into clipboard, `help` to print the full command list with description
 * General code refactoring and improvement
 

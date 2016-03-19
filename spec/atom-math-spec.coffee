@@ -97,3 +97,19 @@ describe 'AtomMath', ->
         triggerEvaluation ->
           clipboard = atom.clipboard.read()
           expect(clipboard).toBe '\n1 + 2\n/clipHistory'
+
+    it 'should evaluate core commands regardless the whitespaces', ->
+      testEditor.insertText 'f(x) = x + 2'
+      triggerEvaluation ->
+        testEditor.insertText '   /functionList  '
+        triggerEvaluation ->
+          expect(testEditor.lineTextForBufferRow 4).toBe 'f(x) = x + 2'
+
+    it 'should print the full command list', ->
+      testEditor.insertText '/help'
+      triggerEvaluation ->
+        expect(testEditor.lineTextForBufferRow 1).toBe '> Full command list below'
+        expect(testEditor.lineTextForBufferRow 2).toBe 'functionList - Print a list of all defined functions'
+        expect(testEditor.lineTextForBufferRow 3).toBe 'clearHistory - Empty the history'
+        expect(testEditor.lineTextForBufferRow 4).toBe 'clipHistory - Copy history into clipboard'
+        expect(testEditor.lineTextForBufferRow 5).toBe 'help - Print the full command list'
