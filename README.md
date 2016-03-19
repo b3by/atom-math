@@ -14,7 +14,7 @@ When working with a buffer, just write an expression to be evaluated like `3 + 2
 or `cos(pi)`, then press the default hotkey `ctrl-alt-m` and the output will be
 inserted in a new line.
 
-![Example](http://raw.githubusercontent.com/b3by/atom-math/master/images/example.gif)
+![Example](https://raw.githubusercontent.com/b3by/atom-math/master/images/example.gif)
 
 ### Functions
 More complex expressions can be evaluated too.
