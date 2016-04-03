@@ -1,5 +1,4 @@
-# {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
-{CompositeDisposable}                     = require 'atom'
+{CompositeDisposable} = require 'atom'
 
 module.exports = AtomMath =
 
@@ -9,6 +8,7 @@ module.exports = AtomMath =
   mathUtils:      null
 
   activate: (state) ->
+    
     HistoryManager = require './history-manager'
     @historyManager = HistoryManager.getManager()
 
