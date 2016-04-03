@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "loophole": "^1.1.x",
-    "mathjs": "^3.0.x"
+    "mathjs": "^3.0.x",
+    "integrate-adaptive-simpson": "^1.0.x"
   }
 }

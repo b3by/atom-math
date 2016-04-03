@@ -1,4 +1,4 @@
-{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
+# {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 {CompositeDisposable}                     = require 'atom'
 
 module.exports = AtomMath =
@@ -6,6 +6,7 @@ module.exports = AtomMath =
   historyManager: null
   coreCommander:  null
   parser:         null
+  mathUtils:      null
 
   activate: (state) ->
     HistoryManager = require './history-manager'
@@ -61,17 +62,8 @@ module.exports = AtomMath =
     if toEvaluate.startsWith('/') and @coreCommander.isCoreCommand toEvaluate
       result = @coreCommander.runCoreCommand toEvaluate
     else
-      @parser ?= allowUnsafeEval ->
-        allowUnsafeNewFunction -> require('mathjs').parser()
-      try
-        result = allowUnsafeEval => allowUnsafeNewFunction =>
-          @parser.eval toEvaluate
-
-        if typeof result is 'function'
-          result = 'saved'
-
-      catch error
-        result = 'wrong syntax'
+      @mathUtils ?= require './math-utils'
+      result = @mathUtils.evaluateExpression toEvaluate
 
     editor.moveToEndOfLine()
     editor.insertNewline()
