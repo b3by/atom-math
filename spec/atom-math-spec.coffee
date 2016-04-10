@@ -105,6 +105,13 @@ describe 'AtomMath', ->
         triggerEvaluation ->
           expect(testEditor.lineTextForBufferRow 4).toBe 'f(x) = x + 2'
 
+    it 'should integrate a function', ->
+      testEditor.insertText 'f(x) = x * 3 + 5'
+      triggerEvaluation ->
+        testEditor.insertText 'integrate(f, 0, 10, 1)'
+        triggerEvaluation ->
+          expect(testEditor.lineTextForBufferRow 3).toBe '> 200'
+
     it 'should print the full command list', ->
       testEditor.insertText '/help'
       triggerEvaluation ->
