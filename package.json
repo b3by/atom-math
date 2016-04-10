@@ -1,7 +1,7 @@
 {
   "name": "atom-math",
   "main": "./lib/atom-math",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "Antonio Bevilacqua <b3by.in.th3.sky@gmail.com>",
   "description": "Atom package for evaluating simple mathematical expression using Math.js",
   "keywords": [
