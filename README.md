@@ -59,6 +59,25 @@ clipHistory - Copy history into clipboard
 help - Print the full command list
 ```
 
+### Definite integration (:exclamation::exclamation:**EXPERIMENTAL**:exclamation::exclamation:)
+Definite integration may be executed in `atom-math` with the usage of
+[this awesome](https://github.com/scijs/integrate-adaptive-simpson)
+package from [scijs](https://github.com/scijs). This feature is **still
+unstable**, so it does not behave as expected when provided evaluation
+points are floating point. Please refer to [this issue](https://github.com/scijs/integrate-adaptive-simpson/issues/1) to get some examples of how the malfunction can manifest.
+
+The current integrate function status will be tracked [here](https://github.com/b3by/atom-math/issues/7).
+
+## `integrate(functionName, startPoint, endPoint, tolerance)`
+
+A simple integration usage example follows:
+```
+f(x) = x + 3
+> saved
+integrate(f, 0, 10, 0.1)
+> 80
+```
+
 ### Command history
 Command history can be navigated by using `ctrl-up` and `ctrl-down`. Browsing
 the command history implies that the current line is emptied and replaced either

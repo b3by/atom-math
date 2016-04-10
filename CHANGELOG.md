@@ -1,3 +1,12 @@
+## 0.0.9
+* **Experimental**: new function definite integration
+> Definite integration may be executed in `atom-math` with the usage of
+> [this awesome](https://github.com/scijs/integrate-adaptive-simpson)
+> package from [scijs](https://github.com/scijs). This feature is still
+> unstable, so it does not behave as expected when provided evaluation
+> points are floating point. Please refer to [this issue](https://github.com/scijs/integrate-adaptive-simpson/issues/1) to get some examples of how the malfunction can manifest.
+* :art: General code refactoring
+
 ## 0.0.8
 * :bug: Core commands are now evaluated also with head whitespaces
 * :white_check_mark: New test case added for core commands evaluation
